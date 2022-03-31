@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { MdOutlineDragIndicator } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { RootState } from '../state/reducer';
 
 import QuestionForm from './QuestionForm';
+import QuestionFormBottom from './QuestionFormBottom';
 
 function DragAndDrop() {
   const [questionForms, questionFormsSet] = useState([
     { id: '1' },
     { id: '2' },
   ]);
-
+  const state = useSelector((state: RootState) => state.question);
   const handleOnDragEnd = (result: any) => {
     if (!result.destination) return;
 
@@ -30,7 +33,7 @@ function DragAndDrop() {
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {questionForms.map(({ id }, index) => {
+              {state.map(({ id }, index) => {
                 return (
                   <Draggable key={id} draggableId={id} index={index}>
                     {(provided) => (
@@ -49,6 +52,7 @@ function DragAndDrop() {
                           />
                         </div>
                         <QuestionForm />
+                        <QuestionFormBottom id={id} />
                       </div>
                     )}
                   </Draggable>
