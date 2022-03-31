@@ -23,6 +23,6 @@
         "tailwindcss"
     ],
     "rules": {
-        "tailwindcss/classnames-order": "warn"
+        "tailwindcss/classnames-order": "off"
     }
 }
