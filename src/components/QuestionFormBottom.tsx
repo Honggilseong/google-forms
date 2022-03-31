@@ -22,7 +22,7 @@ function QuestionFormBottom({ id }: Props) {
   };
 
   return (
-    <div>
+    <div className="bg-white">
       <div className="flex flex-row-reverse items-center border-t p-3">
         <div className="flex h-9 w-9 items-center justify-center rounded-full hover:bg-gray-200">
           <BiDotsVerticalRounded size="25" />

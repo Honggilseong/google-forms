@@ -15,7 +15,7 @@ function DragAndDrop() {
   const state = useSelector((state: RootState) => state.question);
   const handleOnDragEnd = (result: any) => {
     if (!result.destination) return;
-
+    console.log(result);
     const items = Array.from(questionForms);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);

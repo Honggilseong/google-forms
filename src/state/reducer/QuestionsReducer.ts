@@ -3,11 +3,14 @@ import {
   DELETE_QUESTION,
   questionActionDispatch,
 } from './../actions/questionActionType';
+
 interface InitialState {
   id: string;
+  title: string;
+  description: string;
 }
 
-const initialState = [{ id: '1' }];
+const initialState = [{ id: '1', title: '', description: '' }];
 
 const QuestionReducer = (
   state: InitialState[] = initialState,
@@ -15,7 +18,11 @@ const QuestionReducer = (
 ) => {
   switch (action.type) {
     case ADD_QUESTION: {
-      return state.concat({ id: (state.length + 1).toString() });
+      return state.concat({
+        id: (state.length + 1).toString(),
+        title: '',
+        description: '',
+      });
     }
     case DELETE_QUESTION: {
       if (state.length > 1) {
@@ -28,8 +35,3 @@ const QuestionReducer = (
   }
 };
 export default QuestionReducer;
-// const questions = [...questionOption];
-// if (questionOption.length > 1) {
-//   questions.splice(index, 1);
-// }
-// questionSet(questions);
