@@ -1,26 +1,24 @@
-import React, { useState } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import React from 'react';
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from 'react-beautiful-dnd';
 import { MdOutlineDragIndicator } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { dragQuestion } from '../state/actions/questionAction';
 import { RootState } from '../state/reducer';
 
 import QuestionForm from './QuestionForm';
 import QuestionFormBottom from './QuestionFormBottom';
 
 function DragAndDrop() {
-  const [questionForms, questionFormsSet] = useState([
-    { id: '1' },
-    { id: '2' },
-  ]);
   const state = useSelector((state: RootState) => state.question);
-  const handleOnDragEnd = (result: any) => {
-    if (!result.destination) return;
-    console.log(result);
-    const items = Array.from(questionForms);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
+  const dispatch = useDispatch();
 
-    questionFormsSet(items);
+  const handleOnDragEnd = (result: DropResult) => {
+    dispatch(dragQuestion(result));
   };
 
   return (

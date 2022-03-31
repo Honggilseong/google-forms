@@ -1,6 +1,7 @@
 import {
   ADD_QUESTION,
   DELETE_QUESTION,
+  DRAG_QUESTION,
   questionActionDispatch,
 } from './../actions/questionActionType';
 
@@ -27,6 +28,17 @@ const QuestionReducer = (
     case DELETE_QUESTION: {
       if (state.length > 1) {
         return state.filter((question) => question.id !== action.payload);
+      }
+      return state;
+    }
+    case DRAG_QUESTION: {
+      const { source, destination } = action.payload;
+      if (destination) {
+        const items = Array.from(state);
+        const [reorderedItem] = items.splice(source.index, 1);
+        items.splice(destination.index, 0, reorderedItem);
+
+        return items;
       }
       return state;
     }
