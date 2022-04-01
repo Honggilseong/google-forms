@@ -51,7 +51,7 @@ function DragAndDrop() {
                         </div>
                         <QuestionForm
                           optionType={optionType}
-                          index={index}
+                          arrayIndex={index}
                           options={options}
                         />
                         <QuestionFormBottom

@@ -1,6 +1,7 @@
 import {
   ADD_OPTION,
   ADD_QUESTION,
+  CHANGE_VALUE,
   CLICK_REQUIRED,
   DELETE_QUESTION,
   DRAG_QUESTION,
@@ -96,6 +97,13 @@ const QuestionReducer = (
       const newArray = [...state];
       newArray[index].options.push(addOption);
 
+      return [...newArray];
+    }
+    case CHANGE_VALUE: {
+      const { arrayIndex, optionIndex, event } = action.payload;
+      const newArray = [...state];
+      newArray[arrayIndex].options[optionIndex].value = event.target.value;
+      console.log(newArray);
       return [...newArray];
     }
     default:

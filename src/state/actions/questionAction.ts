@@ -8,6 +8,8 @@ import {
   Option,
   SELECT_OPTION,
   ADD_OPTION,
+  CHANGE_VALUE,
+  ChangeOptionValue,
 } from './questionActionType';
 import { Dispatch } from 'redux';
 import { DropResult } from 'react-beautiful-dnd';
@@ -52,3 +54,10 @@ export const addOption = (option: Option) => (dispatch: Dispatch) => {
     payload: option,
   });
 };
+export const changeValue =
+  (option: ChangeOptionValue) => (dispatch: Dispatch) => {
+    dispatch({
+      type: CHANGE_VALUE,
+      payload: option,
+    });
+  };

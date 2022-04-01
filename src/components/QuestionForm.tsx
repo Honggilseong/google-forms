@@ -15,14 +15,18 @@ import {
 } from 'react-beautiful-dnd';
 import { IoMdArrowDropdownCircle } from 'react-icons/io';
 import { useDispatch } from 'react-redux';
-import { addOption, selectOption } from '../state/actions/questionAction';
+import {
+  addOption,
+  changeValue,
+  selectOption,
+} from '../state/actions/questionAction';
 interface Options {
   id: string;
   value: string;
 }
 interface Props {
   optionType: string;
-  index: number;
+  arrayIndex: number;
   options: CheckboxQuestion[];
 }
 
@@ -31,7 +35,7 @@ interface CheckboxQuestion {
   value: string;
 }
 
-function QuestionForm({ optionType, index, options }: Props) {
+function QuestionForm({ optionType, arrayIndex, options }: Props) {
   const [multipleChoiceOptions, multipleChoiceOptionsSet] = useState<
     CheckboxQuestion[]
   >([{ id: (Math.random() + 1).toString(36).substring(7), value: '옵션 1' }]);
@@ -44,7 +48,7 @@ function QuestionForm({ optionType, index, options }: Props) {
 
   const dispatch = useDispatch();
   const selectOptionsHandler = (event: SelectChangeEvent<string>) => {
-    dispatch(selectOption({ index, type: event.target.value }));
+    dispatch(selectOption({ index: arrayIndex, type: event.target.value }));
   };
 
   const handleOnDragEnd = (
@@ -66,7 +70,7 @@ function QuestionForm({ optionType, index, options }: Props) {
       id: (Math.random() + 1).toString(36).substring(7),
       value: '옵션',
     };
-    dispatch(addOption({ index, addOption: newOption }));
+    dispatch(addOption({ index: arrayIndex, addOption: newOption }));
   };
 
   const deleteQuestionHandler = (
@@ -82,16 +86,12 @@ function QuestionForm({ optionType, index, options }: Props) {
   };
 
   const onFocusInputHandler = (
-    questionOption: CheckboxQuestion[],
-    questionSet: Dispatch<SetStateAction<CheckboxQuestion[]>>,
-    value: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement>,
     index: number,
   ) => {
-    const newOption = [...questionOption];
-    newOption[index].value = value.target.value;
-    console.log(newOption);
-    questionSet(newOption);
+    dispatch(changeValue({ arrayIndex, optionIndex: index, event }));
   };
+
   return (
     <div className="h-full w-full bg-white p-5">
       <div className="flex items-center justify-center">
@@ -197,13 +197,8 @@ function QuestionForm({ optionType, index, options }: Props) {
                                 <input
                                   className="w-3/4 border-b pb-1 focus:outline-none"
                                   value={value}
-                                  onChange={(value) =>
-                                    onFocusInputHandler(
-                                      multipleChoiceOptions,
-                                      multipleChoiceOptionsSet,
-                                      value,
-                                      index,
-                                    )
+                                  onChange={(event) =>
+                                    onFocusInputHandler(event, index)
                                   }
                                 />
                                 <AiOutlineClose
@@ -283,13 +278,8 @@ function QuestionForm({ optionType, index, options }: Props) {
                                 <input
                                   className="w-3/4 border-b pb-1 focus:outline-none"
                                   value={value}
-                                  onChange={(value) =>
-                                    onFocusInputHandler(
-                                      checkboxOptions,
-                                      checkboxOptionsSet,
-                                      value,
-                                      index,
-                                    )
+                                  onChange={(event) =>
+                                    onFocusInputHandler(event, index)
                                   }
                                 />
                                 <AiOutlineClose
@@ -367,13 +357,8 @@ function QuestionForm({ optionType, index, options }: Props) {
                                 <input
                                   className="w-3/4 border-b pb-1 focus:outline-none"
                                   value={value}
-                                  onChange={(value) =>
-                                    onFocusInputHandler(
-                                      dropdownOptions,
-                                      dropdownOptionsSet,
-                                      value,
-                                      index,
-                                    )
+                                  onChange={(event) =>
+                                    onFocusInputHandler(event, index)
                                   }
                                 />
                                 <AiOutlineClose

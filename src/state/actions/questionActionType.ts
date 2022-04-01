@@ -5,6 +5,7 @@ export const DRAG_QUESTION = 'DRAG_QUESTION';
 export const CLICK_REQUIRED = 'CLICK_REQUIRED';
 export const SELECT_OPTION = 'SELECT_OPTION';
 export const ADD_OPTION = 'ADD_OPTION';
+export const CHANGE_VALUE = 'CHANGE_VALUE';
 
 export interface AddQuestion {
   type: typeof ADD_QUESTION;
@@ -50,10 +51,22 @@ export interface AddOption {
   payload: Option;
 }
 
+export interface ChangeOptionValue {
+  arrayIndex: number;
+  optionIndex: number;
+  event: React.ChangeEvent<HTMLInputElement>;
+}
+
+export interface ChangeValue {
+  type: typeof CHANGE_VALUE;
+  payload: ChangeOptionValue;
+}
+
 export type questionActionDispatch =
   | AddQuestion
   | DeleteQuestion
   | DragQuestion
   | SelectOption
   | ClickRequired
-  | AddOption;
+  | AddOption
+  | ChangeValue;
