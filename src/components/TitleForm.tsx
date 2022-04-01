@@ -1,25 +1,16 @@
-import React, { useState } from 'react';
-
-interface TextValue {
-  titleValue: string;
-  descriptionValue: string;
-}
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { typeTitle } from '../state/actions/questionTitleAction';
+import { RootState } from '../state/reducer';
 
 function TitleForm() {
-  const [textValue, textValueSet] = useState<TextValue>({
-    titleValue: '제목 없는 설문지',
-    descriptionValue: '',
-  });
-
+  const dispatch = useDispatch();
+  const state = useSelector((state: RootState) => state.title);
   const onFocusInputHandler = (
     name: string,
-    value: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    textValueSet({ ...textValue, [name]: value.target.value });
-  };
-  const onBlurInputHandler = () => {
-    if (textValue.titleValue.length === 0)
-      textValueSet({ ...textValue, titleValue: '제목 없는 설문지' });
+    dispatch(typeTitle({ name, event }));
   };
 
   return (
@@ -32,9 +23,8 @@ function TitleForm() {
             <input
               type="text"
               placeholder="설문지 제목"
-              value={textValue.titleValue}
-              onChange={(value) => onFocusInputHandler('titleValue', value)}
-              onBlur={() => onBlurInputHandler()}
+              value={state.title}
+              onChange={(event) => onFocusInputHandler('title', event)}
               className="h-10 w-full text-2xl placeholder:text-2xl focus:outline-none"
             />
           </div>
@@ -42,11 +32,8 @@ function TitleForm() {
             <input
               type="text"
               placeholder="설문지 제목"
-              value={textValue.descriptionValue}
-              onChange={(value) =>
-                onFocusInputHandler('descriptionValue', value)
-              }
-              onBlur={() => onBlurInputHandler()}
+              value={state.description}
+              onChange={(event) => onFocusInputHandler('description', event)}
               className="mt-3 h-5 w-full text-sm placeholder:text-sm focus:outline-none"
             />
           </div>
