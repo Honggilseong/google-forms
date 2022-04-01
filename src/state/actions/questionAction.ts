@@ -12,6 +12,8 @@ import {
   ChangeOptionValue,
   DRAG_OPTION,
   DragOptionValue,
+  DeleteOptionValue,
+  DELETE_OPTION,
 } from './questionActionType';
 import { Dispatch } from 'redux';
 import { DropResult } from 'react-beautiful-dnd';
@@ -71,3 +73,11 @@ export const dragOption = (option: DragOptionValue) => (dispatch: Dispatch) => {
     payload: option,
   });
 };
+
+export const deleteOption =
+  (option: DeleteOptionValue) => (dispatch: Dispatch) => {
+    dispatch({
+      type: DELETE_OPTION,
+      payload: option,
+    });
+  };

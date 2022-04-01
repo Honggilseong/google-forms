@@ -3,6 +3,7 @@ import {
   ADD_QUESTION,
   CHANGE_VALUE,
   CLICK_REQUIRED,
+  DELETE_OPTION,
   DELETE_QUESTION,
   DRAG_OPTION,
   DRAG_QUESTION,
@@ -62,6 +63,16 @@ const QuestionReducer = (
         return state.filter((question) => question.id !== action.payload);
       }
       return state;
+    }
+    case DELETE_OPTION: {
+      const { arrayIndex, optionId } = action.payload;
+      const newArray = [...state];
+      const newOptions = newArray[arrayIndex].options.filter(
+        (option) => option.id !== optionId,
+      );
+      newArray[arrayIndex].options = newOptions;
+      console.log(newOptions);
+      return [...newArray];
     }
     case DRAG_QUESTION: {
       const { source, destination } = action.payload;

@@ -7,6 +7,7 @@ export const SELECT_OPTION = 'SELECT_OPTION';
 export const ADD_OPTION = 'ADD_OPTION';
 export const CHANGE_VALUE = 'CHANGE_VALUE';
 export const DRAG_OPTION = 'DRAG_OPTION';
+export const DELETE_OPTION = 'DELETE_OPTION';
 
 export interface AddQuestion {
   type: typeof ADD_QUESTION;
@@ -73,6 +74,16 @@ export interface DragOption {
   payload: DragOptionValue;
 }
 
+export interface DeleteOptionValue {
+  arrayIndex: number;
+  optionId: string;
+}
+
+export interface DeleteOption {
+  type: typeof DELETE_OPTION;
+  payload: DeleteOptionValue;
+}
+
 export type questionActionDispatch =
   | AddQuestion
   | DeleteQuestion
@@ -81,4 +92,5 @@ export type questionActionDispatch =
   | ClickRequired
   | AddOption
   | ChangeValue
-  | DragOption;
+  | DragOption
+  | DeleteOption;

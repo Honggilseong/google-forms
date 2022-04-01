@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 import {
   addOption,
   changeValue,
+  deleteOption,
   dragOption,
   selectOption,
 } from '../state/actions/questionAction';
@@ -60,16 +61,10 @@ function QuestionForm({ optionType, arrayIndex, options }: Props) {
     dispatch(addOption({ index: arrayIndex, addOption: newOption }));
   };
 
-  const deleteQuestionHandler = (
-    questionOption: CheckboxQuestion[],
-    questionSet: Dispatch<SetStateAction<CheckboxQuestion[]>>,
-    index: number,
-  ) => {
-    const questions = [...questionOption];
-    if (questionOption.length > 1) {
-      questions.splice(index, 1);
+  const deleteQuestionHandler = (id: string) => {
+    if (options.length > 1) {
+      dispatch(deleteOption({ arrayIndex, optionId: id }));
     }
-    questionSet(questions);
   };
 
   const onFocusInputHandler = (
@@ -182,17 +177,8 @@ function QuestionForm({ optionType, arrayIndex, options }: Props) {
                                 />
                                 <AiOutlineClose
                                   size="20"
-                                  className={`${
-                                    multipleChoiceOptions.length === 1 &&
-                                    'hidden'
-                                  } cursor-pointer`}
-                                  onClick={() =>
-                                    deleteQuestionHandler(
-                                      multipleChoiceOptions,
-                                      multipleChoiceOptionsSet,
-                                      index,
-                                    )
-                                  }
+                                  className={`cursor-pointer`}
+                                  onClick={() => deleteQuestionHandler(id)}
                                 />
                               </div>
                             </div>
@@ -259,16 +245,8 @@ function QuestionForm({ optionType, arrayIndex, options }: Props) {
                                 />
                                 <AiOutlineClose
                                   size="20"
-                                  className={`${
-                                    checkboxOptions.length === 1 && 'hidden'
-                                  } cursor-pointer`}
-                                  onClick={() =>
-                                    deleteQuestionHandler(
-                                      checkboxOptions,
-                                      checkboxOptionsSet,
-                                      index,
-                                    )
-                                  }
+                                  className={`cursor-pointer`}
+                                  onClick={() => deleteQuestionHandler(id)}
                                 />
                               </div>
                             </div>
@@ -334,16 +312,8 @@ function QuestionForm({ optionType, arrayIndex, options }: Props) {
                                 />
                                 <AiOutlineClose
                                   size="20"
-                                  className={`${
-                                    checkboxOptions.length === 1 && 'hidden'
-                                  } cursor-pointer`}
-                                  onClick={() =>
-                                    deleteQuestionHandler(
-                                      dropdownOptions,
-                                      dropdownOptionsSet,
-                                      index,
-                                    )
-                                  }
+                                  className={`cursor-pointer`}
+                                  onClick={() => deleteQuestionHandler(id)}
                                 />
                               </div>
                             </div>
