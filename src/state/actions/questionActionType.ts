@@ -2,8 +2,9 @@ import { DropResult } from 'react-beautiful-dnd';
 export const ADD_QUESTION = 'ADD_QUESTION';
 export const DELETE_QUESTION = 'DELETE_QUESTION';
 export const DRAG_QUESTION = 'DRAG_QUESTION';
-export const SELECT_OPTION = 'SELECT_OPTION';
 export const CLICK_REQUIRED = 'CLICK_REQUIRED';
+export const SELECT_OPTION = 'SELECT_OPTION';
+export const ADD_OPTION = 'ADD_OPTION';
 
 export interface AddQuestion {
   type: typeof ADD_QUESTION;
@@ -19,14 +20,14 @@ export interface DragQuestion {
   payload: DropResult;
 }
 
-export interface Option {
+export interface TypeOption {
   index: number;
   type: string;
 }
 
 export interface SelectOption {
   type: typeof SELECT_OPTION;
-  payload: Option;
+  payload: TypeOption;
 }
 
 export interface Required {
@@ -39,9 +40,20 @@ export interface ClickRequired {
   payload: Required;
 }
 
+export interface Option {
+  index: number;
+  addOption: { id: string; value: string };
+}
+
+export interface AddOption {
+  type: typeof ADD_OPTION;
+  payload: Option;
+}
+
 export type questionActionDispatch =
   | AddQuestion
   | DeleteQuestion
   | DragQuestion
   | SelectOption
-  | ClickRequired;
+  | ClickRequired
+  | AddOption;

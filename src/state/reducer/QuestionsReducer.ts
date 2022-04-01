@@ -1,4 +1,5 @@
 import {
+  ADD_OPTION,
   ADD_QUESTION,
   CLICK_REQUIRED,
   DELETE_QUESTION,
@@ -7,12 +8,18 @@ import {
   SELECT_OPTION,
 } from './../actions/questionActionType';
 
+interface Options {
+  id: string;
+  value: string;
+}
+
 interface InitialState {
   id: string;
   title: string;
   description: string;
   optionType: string;
   isRequired: boolean;
+  options: Options[];
 }
 
 const initialState = [
@@ -22,6 +29,9 @@ const initialState = [
     description: '',
     optionType: 'shortAnswer',
     isRequired: false,
+    options: [
+      { id: (Math.random() + 1).toString(36).substring(7), value: '옵션' },
+    ],
   },
 ];
 
@@ -37,6 +47,12 @@ const QuestionReducer = (
         description: '',
         optionType: 'shortAnswer',
         isRequired: false,
+        options: [
+          {
+            id: (Math.random() + 1).toString(36).substring(7),
+            value: '옵션',
+          },
+        ],
       });
     }
     case DELETE_QUESTION: {
@@ -60,13 +76,25 @@ const QuestionReducer = (
       const { index, type } = action.payload;
       const newArray = [...state];
       newArray[index].optionType = type;
-
+      newArray[index].options = [
+        {
+          id: (Math.random() + 1).toString(36).substring(7),
+          value: '옵션',
+        },
+      ];
       return [...newArray];
     }
     case CLICK_REQUIRED: {
       const { index, isRequired } = action.payload;
       const newArray = [...state];
       newArray[index].isRequired = !isRequired;
+
+      return [...newArray];
+    }
+    case ADD_OPTION: {
+      const { index, addOption } = action.payload;
+      const newArray = [...state];
+      newArray[index].options.push(addOption);
 
       return [...newArray];
     }

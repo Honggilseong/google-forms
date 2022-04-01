@@ -31,7 +31,7 @@ function DragAndDrop() {
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {state.map(({ id, optionType, isRequired }, index) => {
+              {state.map(({ id, optionType, isRequired, options }, index) => {
                 return (
                   <Draggable key={id} draggableId={id} index={index}>
                     {(provided) => (
@@ -49,7 +49,11 @@ function DragAndDrop() {
                             size={15}
                           />
                         </div>
-                        <QuestionForm optionType={optionType} index={index} />
+                        <QuestionForm
+                          optionType={optionType}
+                          index={index}
+                          options={options}
+                        />
                         <QuestionFormBottom
                           id={id}
                           isRequired={isRequired}

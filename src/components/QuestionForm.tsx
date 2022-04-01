@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import {
   AiOutlinePicture,
   AiFillCaretDown,
@@ -15,10 +15,15 @@ import {
 } from 'react-beautiful-dnd';
 import { IoMdArrowDropdownCircle } from 'react-icons/io';
 import { useDispatch } from 'react-redux';
-import { selectOption } from '../state/actions/questionAction';
+import { addOption, selectOption } from '../state/actions/questionAction';
+interface Options {
+  id: string;
+  value: string;
+}
 interface Props {
   optionType: string;
   index: number;
+  options: CheckboxQuestion[];
 }
 
 interface CheckboxQuestion {
@@ -26,7 +31,7 @@ interface CheckboxQuestion {
   value: string;
 }
 
-function QuestionForm({ optionType, index }: Props) {
+function QuestionForm({ optionType, index, options }: Props) {
   const [multipleChoiceOptions, multipleChoiceOptionsSet] = useState<
     CheckboxQuestion[]
   >([{ id: (Math.random() + 1).toString(36).substring(7), value: '옵션 1' }]);
@@ -38,7 +43,6 @@ function QuestionForm({ optionType, index }: Props) {
   ]);
 
   const dispatch = useDispatch();
-
   const selectOptionsHandler = (event: SelectChangeEvent<string>) => {
     dispatch(selectOption({ index, type: event.target.value }));
   };
@@ -57,16 +61,12 @@ function QuestionForm({ optionType, index }: Props) {
     questionSet(items);
   };
 
-  const addCheckboxOptionHandler = (
-    questionOption: CheckboxQuestion[],
-    questionSet: Dispatch<SetStateAction<CheckboxQuestion[]>>,
-  ) => {
-    const checkboxLength = (questionOption.length + 1).toString();
-    const addOption = {
+  const addCheckboxOptionHandler = () => {
+    const newOption = {
       id: (Math.random() + 1).toString(36).substring(7),
-      value: `옵션 ${checkboxLength}`,
+      value: '옵션',
     };
-    questionSet([...questionOption, addOption]);
+    dispatch(addOption({ index, addOption: newOption }));
   };
 
   const deleteQuestionHandler = (
@@ -174,7 +174,7 @@ function QuestionForm({ optionType, index }: Props) {
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                   >
-                    {multipleChoiceOptions.map(({ id, value }, index) => {
+                    {options.map(({ id, value }, index) => {
                       return (
                         <Draggable key={id} draggableId={id} index={index}>
                           {(provided) => (
@@ -236,12 +236,7 @@ function QuestionForm({ optionType, index }: Props) {
               <div className="flex items-center hover:border-b">
                 <p
                   className=" text-gray-500"
-                  onClick={() =>
-                    addCheckboxOptionHandler(
-                      multipleChoiceOptions,
-                      multipleChoiceOptionsSet,
-                    )
-                  }
+                  onClick={() => addCheckboxOptionHandler()}
                 >
                   옵션 추가{`\u00A0`}
                 </p>
@@ -265,7 +260,7 @@ function QuestionForm({ optionType, index }: Props) {
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                   >
-                    {checkboxOptions.map(({ id, value }, index) => {
+                    {options.map(({ id, value }, index) => {
                       return (
                         <Draggable key={id} draggableId={id} index={index}>
                           {(provided) => (
@@ -326,12 +321,7 @@ function QuestionForm({ optionType, index }: Props) {
               <div className="flex items-center hover:border-b">
                 <p
                   className=" text-gray-500"
-                  onClick={() =>
-                    addCheckboxOptionHandler(
-                      checkboxOptions,
-                      checkboxOptionsSet,
-                    )
-                  }
+                  onClick={() => addCheckboxOptionHandler()}
                 >
                   옵션 추가{`\u00A0`}
                 </p>
@@ -355,7 +345,7 @@ function QuestionForm({ optionType, index }: Props) {
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                   >
-                    {dropdownOptions.map(({ id, value }, index) => {
+                    {options.map(({ id, value }, index) => {
                       return (
                         <Draggable key={id} draggableId={id} index={index}>
                           {(provided) => (
@@ -414,12 +404,7 @@ function QuestionForm({ optionType, index }: Props) {
               <div className="flex items-center hover:border-b">
                 <p
                   className=" text-gray-500"
-                  onClick={() =>
-                    addCheckboxOptionHandler(
-                      dropdownOptions,
-                      dropdownOptionsSet,
-                    )
-                  }
+                  onClick={() => addCheckboxOptionHandler()}
                 >
                   옵션 추가{`\u00A0`}
                 </p>
