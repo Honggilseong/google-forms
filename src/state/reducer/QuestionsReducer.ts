@@ -3,15 +3,24 @@ import {
   DELETE_QUESTION,
   DRAG_QUESTION,
   questionActionDispatch,
+  SELECT_OPTION,
 } from './../actions/questionActionType';
 
 interface InitialState {
   id: string;
   title: string;
   description: string;
+  optionType: string;
 }
 
-const initialState = [{ id: '1', title: '', description: '' }];
+const initialState = [
+  {
+    id: (Math.random() + 1).toString(36).substring(7),
+    title: '',
+    description: '',
+    optionType: 'shortAnswer',
+  },
+];
 
 const QuestionReducer = (
   state: InitialState[] = initialState,
@@ -20,9 +29,10 @@ const QuestionReducer = (
   switch (action.type) {
     case ADD_QUESTION: {
       return state.concat({
-        id: (state.length + 1).toString(),
+        id: (Math.random() + 1).toString(36).substring(7),
         title: '',
         description: '',
+        optionType: 'shortAnswer',
       });
     }
     case DELETE_QUESTION: {
@@ -41,6 +51,13 @@ const QuestionReducer = (
         return items;
       }
       return state;
+    }
+    case SELECT_OPTION: {
+      const { index, type } = action.payload;
+      const newArray = [...state];
+      newArray[index].optionType = type;
+
+      return [...newArray];
     }
     default:
       return state;
