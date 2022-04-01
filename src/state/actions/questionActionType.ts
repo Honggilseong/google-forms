@@ -9,6 +9,7 @@ export const CHANGE_VALUE = 'CHANGE_VALUE';
 export const DRAG_OPTION = 'DRAG_OPTION';
 export const DELETE_OPTION = 'DELETE_OPTION';
 export const CHANGE_TITLE = 'CHANGE_TITLE';
+export const COPY_QUESTION = 'COPY_QUESTION';
 
 export interface AddQuestion {
   type: typeof ADD_QUESTION;
@@ -95,6 +96,11 @@ export interface ChangeTitle {
   payload: ChangeTitleValue;
 }
 
+export interface CopyQuestion {
+  type: typeof COPY_QUESTION;
+  payload: number;
+}
+
 export type questionActionDispatch =
   | AddQuestion
   | DeleteQuestion
@@ -105,4 +111,5 @@ export type questionActionDispatch =
   | ChangeValue
   | DragOption
   | DeleteOption
-  | ChangeTitle;
+  | ChangeTitle
+  | CopyQuestion;

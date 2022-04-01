@@ -16,6 +16,7 @@ import {
   DELETE_OPTION,
   CHANGE_TITLE,
   ChangeTitleValue,
+  COPY_QUESTION,
 } from './questionActionType';
 import { Dispatch } from 'redux';
 import { DropResult } from 'react-beautiful-dnd';
@@ -90,3 +91,10 @@ export const changeTitle =
       payload: option,
     });
   };
+
+export const copyQuestion = (option: number) => (dispatch: Dispatch) => {
+  dispatch({
+    type: COPY_QUESTION,
+    payload: option,
+  });
+};

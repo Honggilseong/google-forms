@@ -4,6 +4,7 @@ import {
   CHANGE_TITLE,
   CHANGE_VALUE,
   CLICK_REQUIRED,
+  COPY_QUESTION,
   DELETE_OPTION,
   DELETE_QUESTION,
   DRAG_OPTION,
@@ -138,8 +139,18 @@ const QuestionReducer = (
       const { arrayIndex, event } = action.payload;
       const newArray = [...state];
       newArray[arrayIndex].title = event.target.value;
-
+      console.log(newArray);
       return [...newArray];
+    }
+    case COPY_QUESTION: {
+      const newArray = JSON.parse(JSON.stringify(state));
+      const copyQuestion = newArray[action.payload];
+      const updateQuestion = Object.assign({}, copyQuestion, {
+        id: (Math.random() + 1).toString(36).substring(7),
+      });
+      // if(updateQuestion.optionType === 'multipleChoice' || updateQuestion.optionType === 'dropdown' || updateQuestion.optionType === 'checkbox'){
+      // }
+      return [...state, updateQuestion];
     }
     default:
       return state;

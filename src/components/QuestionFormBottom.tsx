@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { IoCopyOutline } from 'react-icons/io5';
 import { BiTrash, BiDotsVerticalRounded } from 'react-icons/bi';
-import { clickRequired, deleteQuestion } from '../state/actions/questionAction';
+import {
+  clickRequired,
+  copyQuestion,
+  deleteQuestion,
+} from '../state/actions/questionAction';
 import { useDispatch } from 'react-redux';
 import Switch from '@mui/material/Switch';
 
@@ -21,6 +25,10 @@ function QuestionFormBottom({ id, isRequired, index }: Props) {
     dispatch(deleteQuestion(id));
   };
 
+  const copyQuestionHandler = () => {
+    dispatch(copyQuestion(index));
+  };
+
   return (
     <div className="bg-white">
       <div className="flex flex-row-reverse items-center border-t p-3">
@@ -32,7 +40,10 @@ function QuestionFormBottom({ id, isRequired, index }: Props) {
           <Switch onClick={() => stateRequiredHandler()} />
         </div>
         <div className="mr-5 flex border-r border-gray-300 pr-5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full hover:bg-gray-200">
+          <div
+            className="flex h-9 w-9 items-center justify-center rounded-full hover:bg-gray-200"
+            onClick={() => copyQuestionHandler()}
+          >
             <IoCopyOutline size="25" />
           </div>
           <div
