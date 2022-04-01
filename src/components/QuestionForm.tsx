@@ -27,7 +27,6 @@ interface CheckboxQuestion {
 }
 
 function QuestionForm({ optionType, index }: Props) {
-  // const [selectOption, selectOptionSet] = useState<string>('');
   const [multipleChoiceOptions, multipleChoiceOptionsSet] = useState<
     CheckboxQuestion[]
   >([{ id: (Math.random() + 1).toString(36).substring(7), value: '옵션 1' }]);

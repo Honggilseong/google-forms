@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { IoCopyOutline } from 'react-icons/io5';
 import { BiTrash, BiDotsVerticalRounded } from 'react-icons/bi';
-import { deleteQuestion } from '../state/actions/questionAction';
+import { clickRequired, deleteQuestion } from '../state/actions/questionAction';
 import { useDispatch } from 'react-redux';
 import Switch from '@mui/material/Switch';
 
 interface Props {
   id: string;
+  index: number;
+  isRequired: boolean;
 }
 
-function QuestionFormBottom({ id }: Props) {
-  const [required, requiredSet] = useState<boolean>(false);
+function QuestionFormBottom({ id, isRequired, index }: Props) {
   const dispatch = useDispatch();
-
   const stateRequiredHandler = () => {
-    requiredSet(!required);
+    dispatch(clickRequired({ index, isRequired }));
   };
 
   const deleteQuestionHandler = () => {

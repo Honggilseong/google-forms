@@ -1,5 +1,6 @@
 import {
   ADD_QUESTION,
+  CLICK_REQUIRED,
   DELETE_QUESTION,
   DRAG_QUESTION,
   questionActionDispatch,
@@ -11,6 +12,7 @@ interface InitialState {
   title: string;
   description: string;
   optionType: string;
+  isRequired: boolean;
 }
 
 const initialState = [
@@ -19,6 +21,7 @@ const initialState = [
     title: '',
     description: '',
     optionType: 'shortAnswer',
+    isRequired: false,
   },
 ];
 
@@ -33,6 +36,7 @@ const QuestionReducer = (
         title: '',
         description: '',
         optionType: 'shortAnswer',
+        isRequired: false,
       });
     }
     case DELETE_QUESTION: {
@@ -56,6 +60,13 @@ const QuestionReducer = (
       const { index, type } = action.payload;
       const newArray = [...state];
       newArray[index].optionType = type;
+
+      return [...newArray];
+    }
+    case CLICK_REQUIRED: {
+      const { index, isRequired } = action.payload;
+      const newArray = [...state];
+      newArray[index].isRequired = !isRequired;
 
       return [...newArray];
     }

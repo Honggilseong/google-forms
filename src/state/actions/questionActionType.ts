@@ -3,6 +3,7 @@ export const ADD_QUESTION = 'ADD_QUESTION';
 export const DELETE_QUESTION = 'DELETE_QUESTION';
 export const DRAG_QUESTION = 'DRAG_QUESTION';
 export const SELECT_OPTION = 'SELECT_OPTION';
+export const CLICK_REQUIRED = 'CLICK_REQUIRED';
 
 export interface AddQuestion {
   type: typeof ADD_QUESTION;
@@ -28,8 +29,19 @@ export interface SelectOption {
   payload: Option;
 }
 
+export interface Required {
+  index: number;
+  isRequired: boolean;
+}
+
+export interface ClickRequired {
+  type: typeof CLICK_REQUIRED;
+  payload: Required;
+}
+
 export type questionActionDispatch =
   | AddQuestion
   | DeleteQuestion
   | DragQuestion
-  | SelectOption;
+  | SelectOption
+  | ClickRequired;
