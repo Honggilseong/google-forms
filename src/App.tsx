@@ -1,21 +1,17 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import DragAndDrop from './components/DragAndDrop';
-import SideBar from './components/SideBar';
-import TitleForm from './components/TitleForm';
+import Main from './components/Main';
+import Preview from './components/Preview';
+
 function App() {
   return (
-    <div className="h-full w-full bg-fuchsia-100 p-3">
-      <div className="mx-auto max-w-3xl">
-        <div className="flex">
-          <TitleForm />
-          <div className="ml-2">
-            <SideBar />
-          </div>
-        </div>
-        <DragAndDrop />
-      </div>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/preview" element={<Preview />} />
+      </Routes>
+    </>
   );
 }
 
