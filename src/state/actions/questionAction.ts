@@ -10,6 +10,8 @@ import {
   ADD_OPTION,
   CHANGE_VALUE,
   ChangeOptionValue,
+  DRAG_OPTION,
+  DragOptionValue,
 } from './questionActionType';
 import { Dispatch } from 'redux';
 import { DropResult } from 'react-beautiful-dnd';
@@ -54,6 +56,7 @@ export const addOption = (option: Option) => (dispatch: Dispatch) => {
     payload: option,
   });
 };
+
 export const changeValue =
   (option: ChangeOptionValue) => (dispatch: Dispatch) => {
     dispatch({
@@ -61,3 +64,10 @@ export const changeValue =
       payload: option,
     });
   };
+
+export const dragOption = (option: DragOptionValue) => (dispatch: Dispatch) => {
+  dispatch({
+    type: DRAG_OPTION,
+    payload: option,
+  });
+};

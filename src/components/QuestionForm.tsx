@@ -18,9 +18,11 @@ import { useDispatch } from 'react-redux';
 import {
   addOption,
   changeValue,
+  dragOption,
   selectOption,
 } from '../state/actions/questionAction';
-interface Options {
+
+interface CheckboxQuestion {
   id: string;
   value: string;
 }
@@ -28,11 +30,6 @@ interface Props {
   optionType: string;
   arrayIndex: number;
   options: CheckboxQuestion[];
-}
-
-interface CheckboxQuestion {
-  id: string;
-  value: string;
 }
 
 function QuestionForm({ optionType, arrayIndex, options }: Props) {
@@ -51,18 +48,8 @@ function QuestionForm({ optionType, arrayIndex, options }: Props) {
     dispatch(selectOption({ index: arrayIndex, type: event.target.value }));
   };
 
-  const handleOnDragEnd = (
-    questionOption: CheckboxQuestion[],
-    questionSet: Dispatch<SetStateAction<CheckboxQuestion[]>>,
-    result: DropResult,
-  ) => {
-    if (!result.destination) return;
-
-    const items = Array.from(questionOption);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    questionSet(items);
+  const handleOnDragEnd = (result: DropResult) => {
+    dispatch(dragOption({ arrayIndex, result }));
   };
 
   const addCheckboxOptionHandler = () => {
@@ -158,15 +145,7 @@ function QuestionForm({ optionType, arrayIndex, options }: Props) {
 
         {optionType === 'multipleChoice' && (
           <div>
-            <DragDropContext
-              onDragEnd={(result) =>
-                handleOnDragEnd(
-                  multipleChoiceOptions,
-                  multipleChoiceOptionsSet,
-                  result,
-                )
-              }
-            >
+            <DragDropContext onDragEnd={(result) => handleOnDragEnd(result)}>
               <Droppable droppableId="forms">
                 {(provided) => (
                   <div
@@ -243,11 +222,7 @@ function QuestionForm({ optionType, arrayIndex, options }: Props) {
         )}
         {optionType === 'checkbox' && (
           <div>
-            <DragDropContext
-              onDragEnd={(result) =>
-                handleOnDragEnd(checkboxOptions, checkboxOptionsSet, result)
-              }
-            >
+            <DragDropContext onDragEnd={(result) => handleOnDragEnd(result)}>
               <Droppable droppableId="forms">
                 {(provided) => (
                   <div
@@ -323,11 +298,7 @@ function QuestionForm({ optionType, arrayIndex, options }: Props) {
         )}
         {optionType === 'dropdown' && (
           <div>
-            <DragDropContext
-              onDragEnd={(result) =>
-                handleOnDragEnd(dropdownOptions, dropdownOptionsSet, result)
-              }
-            >
+            <DragDropContext onDragEnd={(result) => handleOnDragEnd(result)}>
               <Droppable droppableId="forms">
                 {(provided) => (
                   <div

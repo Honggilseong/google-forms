@@ -4,6 +4,7 @@ import {
   CHANGE_VALUE,
   CLICK_REQUIRED,
   DELETE_QUESTION,
+  DRAG_OPTION,
   DRAG_QUESTION,
   questionActionDispatch,
   SELECT_OPTION,
@@ -73,6 +74,21 @@ const QuestionReducer = (
       }
       return state;
     }
+    case DRAG_OPTION: {
+      const { arrayIndex, result } = action.payload;
+      if (result.destination) {
+        const items = [...state];
+        const optionArray = items[arrayIndex];
+        const [reorderedItem] = optionArray.options.splice(
+          result.source.index,
+          1,
+        );
+        optionArray.options.splice(result.destination.index, 0, reorderedItem);
+
+        return items;
+      }
+      return state;
+    }
     case SELECT_OPTION: {
       const { index, type } = action.payload;
       const newArray = [...state];
@@ -103,9 +119,10 @@ const QuestionReducer = (
       const { arrayIndex, optionIndex, event } = action.payload;
       const newArray = [...state];
       newArray[arrayIndex].options[optionIndex].value = event.target.value;
-      console.log(newArray);
+
       return [...newArray];
     }
+
     default:
       return state;
   }

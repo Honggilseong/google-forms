@@ -6,6 +6,7 @@ export const CLICK_REQUIRED = 'CLICK_REQUIRED';
 export const SELECT_OPTION = 'SELECT_OPTION';
 export const ADD_OPTION = 'ADD_OPTION';
 export const CHANGE_VALUE = 'CHANGE_VALUE';
+export const DRAG_OPTION = 'DRAG_OPTION';
 
 export interface AddQuestion {
   type: typeof ADD_QUESTION;
@@ -62,6 +63,16 @@ export interface ChangeValue {
   payload: ChangeOptionValue;
 }
 
+export interface DragOptionValue {
+  arrayIndex: number;
+  result: DropResult;
+}
+
+export interface DragOption {
+  type: typeof DRAG_OPTION;
+  payload: DragOptionValue;
+}
+
 export type questionActionDispatch =
   | AddQuestion
   | DeleteQuestion
@@ -69,4 +80,5 @@ export type questionActionDispatch =
   | SelectOption
   | ClickRequired
   | AddOption
-  | ChangeValue;
+  | ChangeValue
+  | DragOption;
