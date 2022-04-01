@@ -17,6 +17,7 @@ import { IoMdArrowDropdownCircle } from 'react-icons/io';
 import { useDispatch } from 'react-redux';
 import {
   addOption,
+  changeTitle,
   changeValue,
   deleteOption,
   dragOption,
@@ -34,16 +35,6 @@ interface Props {
 }
 
 function QuestionForm({ optionType, arrayIndex, options }: Props) {
-  const [multipleChoiceOptions, multipleChoiceOptionsSet] = useState<
-    CheckboxQuestion[]
-  >([{ id: (Math.random() + 1).toString(36).substring(7), value: '옵션 1' }]);
-  const [checkboxOptions, checkboxOptionsSet] = useState<CheckboxQuestion[]>([
-    { id: (Math.random() + 1).toString(36).substring(7), value: '옵션 1' },
-  ]);
-  const [dropdownOptions, dropdownOptionsSet] = useState<CheckboxQuestion[]>([
-    { id: (Math.random() + 1).toString(36).substring(7), value: '옵션 1' },
-  ]);
-
   const dispatch = useDispatch();
   const selectOptionsHandler = (event: SelectChangeEvent<string>) => {
     dispatch(selectOption({ index: arrayIndex, type: event.target.value }));
@@ -67,6 +58,10 @@ function QuestionForm({ optionType, arrayIndex, options }: Props) {
     }
   };
 
+  const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeTitle({ arrayIndex, event }));
+  };
+
   const onFocusInputHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
     index: number,
@@ -80,6 +75,7 @@ function QuestionForm({ optionType, arrayIndex, options }: Props) {
         <input
           type="text"
           placeholder="질문"
+          onChange={(event) => onChangeTitle(event)}
           className="flex-1 border-b border-gray-800 p-3 hover:bg-slate-100 focus:outline-none"
         />
         <div className="flex h-7 w-7 cursor-pointer items-center justify-center hover:bg-slate-200">
@@ -95,7 +91,6 @@ function QuestionForm({ optionType, arrayIndex, options }: Props) {
             <MdOutlineSubject size="30" className="mr-2" />
             단답형
           </MenuItem>
-
           <MenuItem
             value="longAnswer"
             style={{ display: 'flex', justifyItems: 'center' }}
@@ -175,11 +170,13 @@ function QuestionForm({ optionType, arrayIndex, options }: Props) {
                                     onFocusInputHandler(event, index)
                                   }
                                 />
-                                <AiOutlineClose
-                                  size="20"
-                                  className={`cursor-pointer`}
-                                  onClick={() => deleteQuestionHandler(id)}
-                                />
+                                {options.length > 1 && (
+                                  <AiOutlineClose
+                                    size="20"
+                                    className="cursor-pointer"
+                                    onClick={() => deleteQuestionHandler(id)}
+                                  />
+                                )}
                               </div>
                             </div>
                           )}
@@ -243,11 +240,13 @@ function QuestionForm({ optionType, arrayIndex, options }: Props) {
                                     onFocusInputHandler(event, index)
                                   }
                                 />
-                                <AiOutlineClose
-                                  size="20"
-                                  className={`cursor-pointer`}
-                                  onClick={() => deleteQuestionHandler(id)}
-                                />
+                                {options.length > 1 && (
+                                  <AiOutlineClose
+                                    size="20"
+                                    className="cursor-pointer"
+                                    onClick={() => deleteQuestionHandler(id)}
+                                  />
+                                )}
                               </div>
                             </div>
                           )}
@@ -310,11 +309,13 @@ function QuestionForm({ optionType, arrayIndex, options }: Props) {
                                     onFocusInputHandler(event, index)
                                   }
                                 />
-                                <AiOutlineClose
-                                  size="20"
-                                  className={`cursor-pointer`}
-                                  onClick={() => deleteQuestionHandler(id)}
-                                />
+                                {options.length > 1 && (
+                                  <AiOutlineClose
+                                    size="20"
+                                    className="cursor-pointer"
+                                    onClick={() => deleteQuestionHandler(id)}
+                                  />
+                                )}
                               </div>
                             </div>
                           )}

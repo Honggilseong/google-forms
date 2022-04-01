@@ -1,6 +1,7 @@
 import {
   ADD_OPTION,
   ADD_QUESTION,
+  CHANGE_TITLE,
   CHANGE_VALUE,
   CLICK_REQUIRED,
   DELETE_OPTION,
@@ -133,7 +134,13 @@ const QuestionReducer = (
 
       return [...newArray];
     }
+    case CHANGE_TITLE: {
+      const { arrayIndex, event } = action.payload;
+      const newArray = [...state];
+      newArray[arrayIndex].title = event.target.value;
 
+      return [...newArray];
+    }
     default:
       return state;
   }

@@ -8,6 +8,7 @@ export const ADD_OPTION = 'ADD_OPTION';
 export const CHANGE_VALUE = 'CHANGE_VALUE';
 export const DRAG_OPTION = 'DRAG_OPTION';
 export const DELETE_OPTION = 'DELETE_OPTION';
+export const CHANGE_TITLE = 'CHANGE_TITLE';
 
 export interface AddQuestion {
   type: typeof ADD_QUESTION;
@@ -84,6 +85,16 @@ export interface DeleteOption {
   payload: DeleteOptionValue;
 }
 
+export interface ChangeTitleValue {
+  arrayIndex: number;
+  event: React.ChangeEvent<HTMLInputElement>;
+}
+
+export interface ChangeTitle {
+  type: typeof CHANGE_TITLE;
+  payload: ChangeTitleValue;
+}
+
 export type questionActionDispatch =
   | AddQuestion
   | DeleteQuestion
@@ -93,4 +104,5 @@ export type questionActionDispatch =
   | AddOption
   | ChangeValue
   | DragOption
-  | DeleteOption;
+  | DeleteOption
+  | ChangeTitle;
