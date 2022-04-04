@@ -17,17 +17,16 @@ function Preview() {
   const questions = useSelector((state: RootState) => state.question);
 
   useEffect(() => {
-    const dropOptions = questions.filter(
-      (question) => question.optionType === 'dropdown',
+    const dropOptions = questions.map(
+      (options) => options.optionType === 'dropdown' && options.options,
     );
-    const newDropOptions = dropOptions.map((option) => option.options);
-    dropdownValueSet(newDropOptions);
+    console.log(dropOptions);
+    dropdownValueSet(dropOptions);
 
-    const multipleOptions = questions.filter(
-      (question) => question.optionType === 'multipleChoice',
+    const multipleOptions = questions.map(
+      (options) => options.optionType === 'multipleChoice' && options.options,
     );
-    const newMultipleOptions = multipleOptions.map((option) => option.options);
-    radioValueSet(newMultipleOptions);
+    radioValueSet(multipleOptions);
   }, [questions]);
 
   return (
