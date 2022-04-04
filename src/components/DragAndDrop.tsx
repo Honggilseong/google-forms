@@ -31,39 +31,42 @@ function DragAndDrop() {
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {state.map(({ id, optionType, isRequired, options }, index) => {
-                return (
-                  <Draggable key={id} draggableId={id} index={index}>
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        className="mb-4 rounded-lg bg-white"
-                      >
+              {state.map(
+                ({ id, optionType, isRequired, options, title }, index) => {
+                  return (
+                    <Draggable key={id} draggableId={id} index={index}>
+                      {(provided) => (
                         <div
-                          {...provided.dragHandleProps}
-                          className="flex h-5 items-center justify-center"
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          className="mb-4 rounded-lg bg-white"
                         >
-                          <MdOutlineDragIndicator
-                            className="rotate-90 text-gray-400"
-                            size={15}
+                          <div
+                            {...provided.dragHandleProps}
+                            className="flex h-5 items-center justify-center"
+                          >
+                            <MdOutlineDragIndicator
+                              className="rotate-90 text-gray-400"
+                              size={15}
+                            />
+                          </div>
+                          <QuestionForm
+                            optionType={optionType}
+                            arrayIndex={index}
+                            options={options}
+                            title={title}
+                          />
+                          <QuestionFormBottom
+                            id={id}
+                            isRequired={isRequired}
+                            index={index}
                           />
                         </div>
-                        <QuestionForm
-                          optionType={optionType}
-                          arrayIndex={index}
-                          options={options}
-                        />
-                        <QuestionFormBottom
-                          id={id}
-                          isRequired={isRequired}
-                          index={index}
-                        />
-                      </div>
-                    )}
-                  </Draggable>
-                );
-              })}
+                      )}
+                    </Draggable>
+                  );
+                },
+              )}
               {provided.placeholder}
             </div>
           )}

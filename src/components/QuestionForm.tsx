@@ -32,9 +32,10 @@ interface Props {
   optionType: string;
   arrayIndex: number;
   options: CheckboxQuestion[];
+  title: string;
 }
 
-function QuestionForm({ optionType, arrayIndex, options }: Props) {
+function QuestionForm({ optionType, arrayIndex, options, title }: Props) {
   const dispatch = useDispatch();
   const selectOptionsHandler = (event: SelectChangeEvent<string>) => {
     dispatch(selectOption({ index: arrayIndex, type: event.target.value }));
@@ -75,6 +76,7 @@ function QuestionForm({ optionType, arrayIndex, options }: Props) {
         <input
           type="text"
           placeholder="질문"
+          value={title}
           onChange={(event) => onChangeTitle(event)}
           className="flex-1 border-b border-gray-800 p-3 hover:bg-slate-100 focus:outline-none"
         />
