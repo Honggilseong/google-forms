@@ -1,10 +1,14 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React from 'react';
 import {
   AiOutlinePicture,
-  AiFillCaretDown,
   AiOutlineClose,
+  AiFillCheckSquare,
 } from 'react-icons/ai';
-import { MdOutlineDragIndicator, MdOutlineSubject } from 'react-icons/md';
+import {
+  MdOutlineDragIndicator,
+  MdOutlineSubject,
+  MdRadioButtonChecked,
+} from 'react-icons/md';
 import Select from '@mui/material/Select';
 import { Checkbox, MenuItem, Radio, SelectChangeEvent } from '@mui/material';
 import {
@@ -84,32 +88,43 @@ function QuestionForm({ optionType, arrayIndex, options, title }: Props) {
           <AiOutlinePicture size={20} />
         </div>
         <Select
-          className="select flex w-48 items-center justify-center"
+          className="select w-48 "
           style={{ color: '#5f6368', fontSize: '13px' }}
           value={optionType}
           onChange={(option) => selectOptionsHandler(option)}
         >
           <MenuItem value="shortAnswer">
-            <MdOutlineSubject size="30" className="mr-2" />
-            단답형
+            <div className="flex items-center justify-evenly">
+              <MdOutlineSubject size="30" className="mr-2" />
+              <p>단답형</p>
+            </div>
           </MenuItem>
           <MenuItem
             value="longAnswer"
             style={{ display: 'flex', justifyItems: 'center' }}
           >
-            <MdOutlineSubject size="30" className="mr-2" /> 장문형
+            <div className="flex items-center justify-evenly">
+              <MdOutlineSubject size="30" className="mr-2" />
+              <p>장문형</p>
+            </div>
           </MenuItem>
           <MenuItem value="checkbox">
-            <Radio className="mr-2" checked style={{ color: 'gray' }} />
-            체크박스
+            <div className="flex items-center justify-evenly">
+              <AiFillCheckSquare size="30" className="mr-2" />
+              <p>체크박스</p>
+            </div>
           </MenuItem>
           <MenuItem value="multipleChoice">
-            <AiFillCaretDown className="mr-3" />
-            객관식 질문
+            <div className="flex items-center justify-evenly">
+              <MdRadioButtonChecked size="30" className="mr-2" />
+              <p>객관식 질문</p>
+            </div>
           </MenuItem>
           <MenuItem value="dropdown">
-            <IoMdArrowDropdownCircle className="mr-3" size="30" />
-            드롭다운
+            <div className="flex items-center justify-evenly">
+              <IoMdArrowDropdownCircle size="30" className="mr-2" />
+              <p>드롭다운</p>
+            </div>
           </MenuItem>
         </Select>
       </div>
