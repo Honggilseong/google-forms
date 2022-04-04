@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoCopyOutline } from 'react-icons/io5';
 import { BiTrash, BiDotsVerticalRounded } from 'react-icons/bi';
 import {
@@ -28,7 +28,9 @@ function QuestionFormBottom({ id, isRequired, index }: Props) {
   const copyQuestionHandler = () => {
     dispatch(copyQuestion(index));
   };
-
+  useEffect(() => {
+    console.log(isRequired);
+  }, [isRequired]);
   return (
     <div className="bg-white">
       <div className="flex flex-row-reverse items-center border-t p-3">
@@ -37,7 +39,7 @@ function QuestionFormBottom({ id, isRequired, index }: Props) {
         </div>
         <div className="flex items-center justify-center">
           <p>필수</p>
-          <Switch onClick={() => stateRequiredHandler()} />
+          <Switch checked={isRequired} onClick={() => stateRequiredHandler()} />
         </div>
         <div className="mr-5 flex border-r border-gray-300 pr-5">
           <div
