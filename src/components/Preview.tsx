@@ -32,8 +32,8 @@ function Preview() {
   return (
     <div className="h-full w-full bg-fuchsia-100 p-3">
       <div className="mb-3 flex w-full justify-center">
-        <Link to="/" className="bg-blue-500">
-          되돌아가기
+        <Link to="/" className="rounded-full bg-blue-500 p-3">
+          <p className="text-white">되돌아가기</p>
         </Link>
       </div>
       <div className="mx-auto max-w-3xl">
