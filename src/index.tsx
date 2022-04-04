@@ -7,12 +7,16 @@ import './tailwind.css';
 import store from './state/store';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider as UiProvider } from '@pongo-ui/react-provider';
+import { webLightTheme } from '@pongo-ui/react-theme';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <UiProvider theme={webLightTheme}>
+          <App />
+        </UiProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
