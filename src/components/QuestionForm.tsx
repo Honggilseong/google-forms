@@ -88,7 +88,7 @@ function QuestionForm({ optionType, arrayIndex, options, title }: Props) {
           <AiOutlinePicture size={20} />
         </div>
         <Select
-          className="select w-48 "
+          className="select w-48"
           style={{ color: '#5f6368', fontSize: '13px' }}
           value={optionType}
           onChange={(option) => selectOptionsHandler(option)}

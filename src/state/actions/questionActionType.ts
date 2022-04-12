@@ -10,6 +10,8 @@ export const DRAG_OPTION = 'DRAG_OPTION';
 export const DELETE_OPTION = 'DELETE_OPTION';
 export const CHANGE_TITLE = 'CHANGE_TITLE';
 export const COPY_QUESTION = 'COPY_QUESTION';
+export const FOCUS_QUESTION = 'FOCUS_QUESTION';
+export const UNFOCUS_QUESTION = 'UNFOCUS_QUESTION';
 
 export interface AddQuestion {
   type: typeof ADD_QUESTION;
@@ -101,6 +103,15 @@ export interface CopyQuestion {
   payload: number;
 }
 
+export interface FocusQuestion {
+  type: typeof FOCUS_QUESTION;
+  payload: number;
+}
+
+export interface UnFocusQuestion {
+  type: typeof UNFOCUS_QUESTION;
+}
+
 export type questionActionDispatch =
   | AddQuestion
   | DeleteQuestion
@@ -112,4 +123,6 @@ export type questionActionDispatch =
   | DragOption
   | DeleteOption
   | ChangeTitle
-  | CopyQuestion;
+  | CopyQuestion
+  | FocusQuestion
+  | UnFocusQuestion;

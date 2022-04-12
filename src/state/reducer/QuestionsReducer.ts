@@ -9,8 +9,10 @@ import {
   DELETE_QUESTION,
   DRAG_OPTION,
   DRAG_QUESTION,
+  FOCUS_QUESTION,
   questionActionDispatch,
   SELECT_OPTION,
+  UNFOCUS_QUESTION,
 } from './../actions/questionActionType';
 
 interface Options {
@@ -25,6 +27,7 @@ interface InitialState {
   optionType: string;
   isRequired: boolean;
   options: Options[];
+  isFocus: boolean;
 }
 
 const initialState = [
@@ -37,6 +40,7 @@ const initialState = [
     options: [
       { id: (Math.random() + 1).toString(36).substring(7), value: '옵션' },
     ],
+    isFocus: false,
   },
 ];
 
@@ -58,6 +62,7 @@ const QuestionReducer = (
             value: '옵션',
           },
         ],
+        isFocus: false,
       });
     }
     case DELETE_QUESTION: {
@@ -148,9 +153,18 @@ const QuestionReducer = (
       const updateQuestion = Object.assign({}, copyQuestion, {
         id: (Math.random() + 1).toString(36).substring(7),
       });
-      // if(updateQuestion.optionType === 'multipleChoice' || updateQuestion.optionType === 'dropdown' || updateQuestion.optionType === 'checkbox'){
-      // }
       return [...state, updateQuestion];
+    }
+    case FOCUS_QUESTION: {
+      const newArray = [...state];
+      newArray.map((question) => [question, (question.isFocus = false)]);
+      newArray[action.payload].isFocus = true;
+      return [...newArray];
+    }
+    case UNFOCUS_QUESTION: {
+      const newArray = [...state];
+      newArray.map((question) => [question, (question.isFocus = false)]);
+      return [...newArray];
     }
     default:
       return state;

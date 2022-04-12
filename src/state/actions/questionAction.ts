@@ -17,6 +17,8 @@ import {
   CHANGE_TITLE,
   ChangeTitleValue,
   COPY_QUESTION,
+  FOCUS_QUESTION,
+  UNFOCUS_QUESTION,
 } from './questionActionType';
 import { Dispatch } from 'redux';
 import { DropResult } from 'react-beautiful-dnd';
@@ -96,5 +98,18 @@ export const copyQuestion = (option: number) => (dispatch: Dispatch) => {
   dispatch({
     type: COPY_QUESTION,
     payload: option,
+  });
+};
+
+export const focusQuestion = (option: number) => (dispatch: Dispatch) => {
+  dispatch({
+    type: FOCUS_QUESTION,
+    payload: option,
+  });
+};
+
+export const unFocusQuestion = () => (dispatch: Dispatch) => {
+  dispatch({
+    type: UNFOCUS_QUESTION,
   });
 };

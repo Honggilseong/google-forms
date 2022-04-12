@@ -7,7 +7,8 @@ import {
 } from 'react-beautiful-dnd';
 import { MdOutlineDragIndicator } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
-import { dragQuestion } from '../state/actions/questionAction';
+import { dragQuestion, focusQuestion } from '../state/actions/questionAction';
+import { unFocusTitle } from '../state/actions/questionTitleAction';
 import { RootState } from '../state/reducer';
 
 import QuestionForm from './QuestionForm';
@@ -21,6 +22,10 @@ function DragAndDrop() {
     dispatch(dragQuestion(result));
   };
 
+  const onClickQuestionHandler = (index: number) => {
+    dispatch(focusQuestion(index));
+    dispatch(unFocusTitle());
+  };
   return (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -32,24 +37,32 @@ function DragAndDrop() {
               ref={provided.innerRef}
             >
               {state.map(
-                ({ id, optionType, isRequired, options, title }, index) => {
+                (
+                  { id, optionType, isRequired, options, title, isFocus },
+                  index,
+                ) => {
                   return (
                     <Draggable key={id} draggableId={id} index={index}>
                       {(provided) => (
                         <div
                           ref={provided.innerRef}
                           {...provided.draggableProps}
-                          className="mb-4 rounded-lg bg-white"
+                          className="relative mb-4 overflow-hidden rounded-lg bg-white"
+                          onClick={() => onClickQuestionHandler(index)}
                         >
+                          {isFocus && (
+                            <div className="absolute left-0 bottom-0 z-10 h-full w-2 bg-blue-500" />
+                          )}
                           <div
                             {...provided.dragHandleProps}
-                            className="flex h-5 items-center justify-center"
+                            className="relative flex h-5 items-center justify-center"
                           >
                             <MdOutlineDragIndicator
                               className="rotate-90 text-gray-400"
                               size={15}
                             />
                           </div>
+
                           <QuestionForm
                             optionType={optionType}
                             arrayIndex={index}
